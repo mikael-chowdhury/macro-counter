@@ -40,13 +40,14 @@ export default <T>(path: string, columns: string[]): Promise<T[]> => {
           (lineNumber / splitLines.length) * 100 -
             (Math.max(lineNumber - 1, 0) / splitLines.length) * 100 >
           10
-        )
+        ) {
           process.stdout.clearLine(0);
-        process.stdout.write(
-          "   Parsing Data...   " +
-            Math.floor((lineNumber / (splitLines.length - 1)) * 100) +
-            "%\r"
-        );
+          process.stdout.write(
+            "   Parsing Data...   " +
+              Math.floor((lineNumber / (splitLines.length - 1)) * 100) +
+              "%\r"
+          );
+        }
 
         return object;
       });

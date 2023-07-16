@@ -6,9 +6,12 @@ import { readFileSync, writeFileSync } from "fs";
 
 export default async (foodData: DataFrame<FoodItem>): Promise<void> => {
   return new Promise(async (res, rej) => {
+    console.log("loading data.json");
     const data = JSON.parse(
       readFileSync(path.join(__dirname, "..", "data.json")).toString()
     );
+
+    console.log("loading fullData.json");
     const fullData = JSON.parse(
       readFileSync(path.join(__dirname, "..", "fullData.json")).toString()
     );
@@ -25,6 +28,7 @@ export default async (foodData: DataFrame<FoodItem>): Promise<void> => {
 
       const splicedIds = splicedFood.map((item) => item.fdc_id);
 
+      const beginTime = Date.now();
       const result: {}[] = await CentralRequestPost("/foods", {
         fdcIds: splicedIds,
         format: "full",
@@ -97,7 +101,9 @@ export default async (foodData: DataFrame<FoodItem>): Promise<void> => {
           process.stdout.write(
             `   Obtained Nutrient Data ${
               (result.length / (data as FoodItem[]).length) * 100
-            }%\r`
+            }%  |  Request + Formatting took ${Math.floor(
+              (Date.now() - beginTime) / 1000
+            )}s\r`
           );
 
           pageNum++;
