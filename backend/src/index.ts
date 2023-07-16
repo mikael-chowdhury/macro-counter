@@ -8,16 +8,16 @@ import GetFoodItemsWithNutrientData from "./data/GetFoodItemsWithNutrientData";
 import GetBulkNutrientData from "./data/GetBulkNutrientData";
 
 (async () => {
-  const foodData = await loadData<FoodItem>("food");
+  // const foodData = await loadData<FoodItem>("food");
 
-  fs.writeFileSync(
-    path.join(__dirname, "data.json"),
-    JSON.stringify(foodData.data, null, 4)
-  );
-
-  // const foodData: DataFrame<FoodItem> = new DataFrame(
-  //   JSON.parse(fs.readFileSync(path.join(__dirname, "data.json")).toString())
+  // fs.writeFileSync(
+  //   path.join(__dirname, "data.json"),
+  //   JSON.stringify(foodData.data, null, 4)
   // );
+
+  const foodData: DataFrame<FoodItem> = new DataFrame(
+    JSON.parse(fs.readFileSync(path.join(__dirname, "data.json")).toString())
+  );
 
   const fullData = JSON.parse(
     fs.readFileSync(path.join(__dirname, "fullData.json")).toString()
